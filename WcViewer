@@ -1,0 +1,267 @@
+package vis;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+
+public class Viewer extends JFrame {
+	
+	static int YEARTOTAL = 15;
+	static int NUM_TOPIC = 20;
+	static int START_YEAR = 2003;
+	JMenuBar mb = new JMenuBar();
+	JMenu year_menu = new JMenu("year");
+	JMenuItem[] sub_year = new JMenuItem[YEARTOTAL];
+	JPanel panel = new JPanel();
+	JLabel[] topic = new JLabel[NUM_TOPIC];
+	
+	JPanel title = new JPanel();
+	JLabel title_name = new JLabel("year 2003");
+	ImageIcon[][] wordcloud = new ImageIcon[YEARTOTAL][NUM_TOPIC];
+	int year = 0;
+	Viewer() {
+		
+		title.add(title_name);
+		mb.add(year_menu);
+		
+		for (int y = 0; y<YEARTOTAL; y++) {
+			sub_year[y] = new JMenuItem(Integer.toString(y + START_YEAR));
+			year_menu.add(sub_year[y]);
+			System.out.println(sub_year[y].getText());
+		}
+		sub_year[0].addActionListener(new Show2003());
+		sub_year[1].addActionListener(new Show2004());
+		sub_year[2].addActionListener(new Show2005());
+		sub_year[3].addActionListener(new Show2006());
+		sub_year[4].addActionListener(new Show2007());
+		sub_year[5].addActionListener(new Show2008());
+		sub_year[6].addActionListener(new Show2009());
+		sub_year[7].addActionListener(new Show2010());
+		sub_year[8].addActionListener(new Show2011());
+		sub_year[9].addActionListener(new Show2012());
+		sub_year[10].addActionListener(new Show2013());
+		sub_year[11].addActionListener(new Show2014());
+		sub_year[12].addActionListener(new Show2015());
+		sub_year[13].addActionListener(new Show2016());
+		sub_year[14].addActionListener(new Show2017());
+		
+		load();
+		
+		setJMenuBar(mb);
+		panel.setLayout(new GridLayout(4,5));
+		for(int i = 0; i<NUM_TOPIC; i++) {
+			topic[i] = new JLabel();
+			topic[i].setLayout(new BorderLayout());
+			panel.add(topic[i]);
+		}
+		this.setLayout(new BorderLayout());
+		this.add(title, BorderLayout.NORTH);
+		this.add(panel);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(1000,600);
+		this.addComponentListener(new resizedetect());
+		change();
+		this.setVisible(true);
+		this.requestFocus();
+	}
+	public static void main(String[] args) {
+		Viewer _run = new Viewer();
+	}
+	public void change() {
+		title_name.setText("year " + Integer.toString(START_YEAR + year));
+		for(int i = 0 ; i<NUM_TOPIC; i++) {
+			Image wcimg = wordcloud[year][i].getImage();
+			wcimg = wcimg.getScaledInstance(getWidth()/6, getHeight()/7, Image.SCALE_FAST);
+			ImageIcon icon = new ImageIcon(wcimg);
+			topic[i].add(new JLabel("topic " + Integer.toString(i+1)), BorderLayout.NORTH);
+			topic[i].setIcon(icon);
+		}
+	}
+	public void load() {
+		for(int y = 0; y<YEARTOTAL; y++) {
+			String common = "wcimg\\wc" + Integer.toString(y+START_YEAR) + "\\wc"+Integer.toString(y+START_YEAR)+"_topic";
+			for(int i = 0 ; i<NUM_TOPIC; i++) {
+				String path = common +Integer.toString(i)+".png";
+				System.out.println(path);
+				wordcloud[y][i]= new ImageIcon(path);
+			}
+		}
+	}
+	class resizedetect implements ComponentListener{
+
+		@Override
+		public void componentResized(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			change();
+			repaint();
+		}
+
+		@Override
+		public void componentMoved(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			change();
+			repaint();
+		}
+
+		@Override
+		public void componentShown(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			change();
+			repaint();
+		}
+
+		@Override
+		public void componentHidden(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			change();
+			repaint();
+		}
+		
+	}
+	class Show2003 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 0;
+			change();
+			repaint();
+		}
+	}
+	class Show2004 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 1;
+			change();
+			repaint();
+		}
+	}
+	class Show2005 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 2;
+			change();
+			repaint();
+		}
+	}
+	class Show2006 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 3;
+			change();
+			repaint();
+		}
+	}
+	class Show2007 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 4;
+			change();
+			repaint();
+		}
+	}
+	class Show2008 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 5;
+			change();
+			repaint();
+		}
+	}
+	class Show2009 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 6;
+			change();
+			repaint();
+		}
+	}
+	class Show2010 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 7;
+			change();
+			repaint();
+		}
+	}
+	class Show2011 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 8;
+			change();
+			repaint();
+		}
+	}
+	class Show2012 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 9;
+			change();
+			repaint();
+		}
+	}
+	class Show2013 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 10;
+			change();
+			repaint();
+		}
+	}
+	class Show2014 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 11;
+			change();
+			repaint();
+		}
+	}
+	class Show2015 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 12;
+			change();
+			repaint();
+		}
+	}
+	class Show2016 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 13;
+			change();
+			repaint();
+		}
+	}
+	class Show2017 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			year = 14;
+			change();
+			repaint();
+		}
+	}
+}
